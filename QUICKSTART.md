@@ -3,7 +3,7 @@
 ## 1. Install Dependencies
 
 ```bash
-cd crm-app
+cd project root folder
 npm install
 ```
 
@@ -16,8 +16,8 @@ npm install
 5. Create the required demo user by registering in the app or adding the user in Supabase Auth:
 
 ```text
-Email: admin@example.com
-Password: password123
+Email: test1@gmail.com
+Password: 123456
 ```
 
 ## 3. Create `.env`
@@ -29,8 +29,6 @@ SUPABASE_URL=https://your-project-ref.supabase.co
 SUPABASE_PUBLISHABLE_KEY=your-supabase-publishable-or-anon-key
 PORT=5000
 ```
-
-`SUPABASE_ANON_KEY` can be used instead of `SUPABASE_PUBLISHABLE_KEY`.
 
 ## 4. Start the Backend
 
@@ -55,13 +53,7 @@ npx http-server -p 3000
 Then open:
 
 ```text
-http://localhost:3000
-```
-
-Alternative static server:
-
-```bash
-python -m http.server 3000
+http://localhost:3000 or http://127.0.0.1:3000
 ```
 
 ## Assessment Requirements Covered
@@ -79,10 +71,8 @@ python -m http.server 3000
 
 ## Demo Video Checklist
 
-Record a 5 to 10 minute demo showing:
-
 - Local setup and run commands
-- Login with `admin@example.com` / `password123`
+- Login with `test1@gmail.com` / `123456`
 - Dashboard
 - Creating a lead
 - Editing a lead
@@ -90,38 +80,6 @@ Record a 5 to 10 minute demo showing:
 - Adding notes
 - Searching or filtering leads
 - Backend API and Supabase database explanation
-
-Add the demo video link to `README.md` before submission.
-
-## Deployment Note
-
-The app is not deployed yet. If you deploy it, add the public application link to `README.md` and test it in an incognito/private browser window.
-
-## Troubleshooting
-
-`Supabase is not configured`
-
-Check that `.env` exists and contains `SUPABASE_URL` plus a Supabase publishable or anon key.
-
-`Login failed`
-
-Confirm the test user exists in Supabase Auth and is confirmed if email confirmation is enabled.
-
-`Cannot POST /api/auth/login`
-
-The backend is not running or the frontend is pointing at the wrong API URL. Start the backend with `npm start`.
-
-Blank frontend page
-
-Serve the project from the root folder and check the browser console for script errors.
-
-Leads or notes do not save
-
-Confirm the SQL schema was run, the backend is running, and Supabase row level security policies were created.
-
-## File Breakdown
-
-- `server.js` - Express API routes, Supabase Auth, and Supabase database calls
 - `index.html` - Loads React, Tailwind, and frontend scripts
 - `js/apiService.js` - Frontend API helper
 - `js/components.js` - Reusable UI components
