@@ -1,74 +1,130 @@
 # Quick Start Guide
 
-## Step 1: Setup
+## 1. Install Dependencies
+
 ```bash
 cd crm-app
 npm install
 ```
 
-## Step 2: Supabase Setup
+## 2. Set Up Supabase
+
 1. Create a Supabase project.
-2. Open the Supabase SQL editor and run the contents of `supabase-schema.sql`.
-3. Copy `.env.example` to `.env`.
-4. Fill in:
-```bash
-SUPABASE_URL=https://your-project-ref.supabase.co
-SUPABASE_PUBLISHABLE_KEY=your-supabase-publishable-or-anon-key
+2. Open SQL Editor in Supabase.
+3. Run the full contents of `supabase-schema.sql`.
+4. In Authentication settings, disable email confirmation for local testing, or manually confirm registered users.
+5. Create the required demo user by registering in the app or adding the user in Supabase Auth:
+
+```text
+Email: admin@example.com
+Password: password123
 ```
 
-## Step 3: Start Backend
+## 3. Create `.env`
+
+Create a `.env` file in the project root:
+
+```env
+SUPABASE_URL=https://your-project-ref.supabase.co
+SUPABASE_PUBLISHABLE_KEY=your-supabase-publishable-or-anon-key
+PORT=5000
+```
+
+`SUPABASE_ANON_KEY` can be used instead of `SUPABASE_PUBLISHABLE_KEY`.
+
+## 4. Start the Backend
+
 ```bash
 npm start
 ```
 
-You should see: `Server running on http://localhost:5000`
+Expected output:
 
-## Step 4: Open Frontend
-In a new terminal, serve `index.html`:
+```text
+Server running on http://localhost:5000
+```
+
+## 5. Open the Frontend
+
+In a second terminal, serve the frontend from the project root:
 
 ```bash
 npx http-server -p 3000
 ```
 
-Then open: `http://localhost:3000`
+Then open:
 
-## Login / Register
-Use the Register tab to create an account. Turn off email confirmation in Supabase Auth so users can log in immediately.
+```text
+http://localhost:3000
+```
 
-## What You Can Do
-- Create leads
-- Edit/delete leads
-- Update lead status
-- Add notes to leads
-- View dashboard
-- Filter by status and source
-- Search by name/company/email
+Alternative static server:
+
+```bash
+python -m http.server 3000
+```
+
+## Assessment Requirements Covered
+
+- Authentication with test credentials
+- Protected CRM screens after login
+- Lead CRUD
+- Lead status updates
+- Lead notes
+- Dashboard metrics
+- Filtering by status and lead source
+- Search by lead name, company, or email
+- Supabase database persistence
+- README with setup, environment variables, database setup, limitations, and reflection
+
+## Demo Video Checklist
+
+Record a 5 to 10 minute demo showing:
+
+- Local setup and run commands
+- Login with `admin@example.com` / `password123`
+- Dashboard
+- Creating a lead
+- Editing a lead
+- Updating lead status
+- Adding notes
+- Searching or filtering leads
+- Backend API and Supabase database explanation
+
+Add the demo video link to `README.md` before submission.
+
+## Deployment Note
+
+The app is not deployed yet. If you deploy it, add the public application link to `README.md` and test it in an incognito/private browser window.
 
 ## Troubleshooting
 
-**Error: Cannot POST /api/auth/login**
-- Backend not running. Run `npm start` in the project folder.
+`Supabase is not configured`
 
-**Frontend shows blank**
-- Make sure you're serving `index.html` from port 3000.
-- Check the browser console for errors.
+Check that `.env` exists and contains `SUPABASE_URL` plus a Supabase publishable or anon key.
 
-**Leads not saving**
-- Check that the backend is running.
-- Check that `.env` has your Supabase keys.
-- Check the terminal where `npm start` is running for server errors.
+`Login failed`
 
-**CORS errors**
-- The backend is already configured with CORS enabled.
-- Use separate ports for frontend and backend: frontend `3000`, backend `5000`.
+Confirm the test user exists in Supabase Auth and is confirmed if email confirmation is enabled.
 
-## Files Breakdown
-- `server.js` - Express API routes and Supabase calls
-- `index.html` - Loads React, Tailwind, and app scripts
+`Cannot POST /api/auth/login`
+
+The backend is not running or the frontend is pointing at the wrong API URL. Start the backend with `npm start`.
+
+Blank frontend page
+
+Serve the project from the root folder and check the browser console for script errors.
+
+Leads or notes do not save
+
+Confirm the SQL schema was run, the backend is running, and Supabase row level security policies were created.
+
+## File Breakdown
+
+- `server.js` - Express API routes, Supabase Auth, and Supabase database calls
+- `index.html` - Loads React, Tailwind, and frontend scripts
 - `js/apiService.js` - Frontend API helper
 - `js/components.js` - Reusable UI components
 - `js/app.js` - Main app state and page logic
-- `supabase-schema.sql` - Supabase table setup
-
-## Data Persistence
-Users, leads, and notes are stored in Supabase. Auth stores login accounts, and `public.users` stores each user's name/email profile. `db.json` is no longer used by the server.
+- `supabase-schema.sql` - Supabase tables, indexes, trigger, and RLS policies
+- `README.md` - Full assessment-facing project documentation
