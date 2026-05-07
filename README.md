@@ -1,120 +1,187 @@
-# CRM Lead Management System
+# CRM Application
 
-A full-stack Lead Management CRM application for small sales teams to track leads, manage their progress through a sales pipeline, add notes, and view dashboard metrics.
+A full-stack CRM Lead Management application for a small sales team. The app lets authenticated users manage sales leads, track each lead through a sales pipeline, add internal notes, and review basic dashboard metrics.
+
+## Project Overview
+
+This project was built for the full-stack CRM take-home assessment. It demonstrates:
+
+- Frontend UI for login, dashboard, lead management, filtering, search, and notes
+- Backend API routes for authentication, lead CRUD, lead notes, and dashboard metrics
+- Persistent storage with Supabase Postgres
+- Authentication with Supabase Auth
+- Clear local setup and database setup instructions
 
 ## Tech Stack
 
-- **Frontend**: React 18 via CDN, Tailwind CSS
-- **Backend**: Node.js, Express.js
-- **Database**: Supabase Postgres
-- **Authentication**: Supabase Auth
-- **Ports**: 5000 backend, 3000 frontend
+- Frontend: React 18 via CDN, Tailwind CSS
+- Backend: Node.js, Express.js
+- Database: Supabase Postgres
+- Authentication: Supabase Auth
+- Local ports: backend `5000`, frontend `3000`
 
-## Features
+## Features Implemented
 
-- Register and log in with Supabase Auth
-- Save registered user details in the database
-- Create, read, update, and delete leads
-- Track lead status: New, Contacted, Qualified, Proposal Sent, Won, Lost
-- Add notes to individual leads
-- View dashboard totals and deal values
-- Search and filter leads by status, source, name, company, or email
+- Login and registration flow
+- Protected CRM screens that require authentication
+- Create, view, edit, and delete leads
+- Lead fields: name, company, email, phone, source, assigned salesperson, status, estimated deal value, created date, and last updated date
+- Lead statuses: New, Contacted, Qualified, Proposal Sent, Won, Lost
+- Add notes to individual leads with author and created date
+- Dashboard metrics for total leads, New, Qualified, Won, Lost, total estimated deal value, and won deal value
+- Filter leads by status and lead source in the UI
+- Backend support for filtering by assigned salesperson
+- Search leads by lead name, company name, or email
+- Supabase row level security policies for authenticated access
+
+## Test Login Credentials
+
+Use this test account for the demo:
+
+```text
+Email: admin@example.com
+Password: password123
+```
+
+If the account does not exist yet, create it from the Register tab using the same email and password, or create it in Supabase Authentication. For the smoothest local demo, disable email confirmation in Supabase Auth settings so registration returns a usable session immediately.
+
+## Environment Variables
+
+Create a `.env` file in the project root:
+
+```env
+SUPABASE_URL=https://your-project-ref.supabase.co
+SUPABASE_PUBLISHABLE_KEY=your-supabase-publishable-or-anon-key
+PORT=5000
+```
+
+`SUPABASE_ANON_KEY` is also accepted by the server as a fallback if you prefer that variable name.
+
+## Database Setup
+
+1. Create a Supabase project.
+2. Open the Supabase SQL Editor.
+3. Run the full contents of `supabase-schema.sql`.
+4. In Supabase Authentication settings, turn off email confirmation for local testing, or manually confirm the test user after registration.
+5. Create or register the demo user:
+   - Email: `admin@example.com`
+   - Password: `password123`
+
+The schema creates:
+
+```sql
+public.users
+public.leads
+public.notes
+```
+
+It also adds indexes, a trigger that updates lead `updated_date`, and row level security policies for authenticated users.
 
 ## How to Run Locally
 
-### Prerequisites
+Install dependencies:
 
-- Node.js v20+
-- npm
-- A Supabase project
+```bash
+npm install
+```
 
-### Installation
+Start the backend API:
 
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
+```bash
+npm start
+```
 
-2. Create the Supabase tables:
-   - Open your Supabase project.
-   - Go to SQL Editor.
-   - Run the contents of `supabase-schema.sql`.
+The API should run at:
 
-3. Configure environment variables:
-   ```bash
-   copy .env.example .env
-   ```
+```text
+http://localhost:5000
+```
 
-   Fill in `.env`:
-   ```bash
-   SUPABASE_URL=https://your-project-ref.supabase.co
-   SUPABASE_PUBLISHABLE_KEY=your-supabase-publishable-or-anon-key
-   PORT=5000
-   ```
+Serve the frontend from the project root in a second terminal:
 
-4. Start the backend:
-   ```bash
-   npm start
-   ```
+```bash
+npx http-server -p 3000
+```
 
-5. Serve the frontend from the project folder:
-   ```bash
-   npx http-server -p 3000
-   ```
+Then open:
 
-   Then open `http://localhost:3000`.
+```text
+http://localhost:3000
+```
 
-## Login / Register
+If `http-server` is not installed and you do not want `npx` to download it, use any static file server from the project root, such as:
 
-Use the Register tab to create a new account. For this simple project, turn off email confirmation in Supabase Auth so registration logs in immediately.
+```bash
+python -m http.server 3000
+```
 
 ## API Endpoints
 
-### Authentication
+Authentication:
 
-- `POST /api/auth/register` - Register a new user
-- `POST /api/auth/login` - Log in and get a Supabase access token
+- `POST /api/auth/register`
+- `POST /api/auth/login`
 
-### Leads
+Leads:
 
-- `GET /api/leads` - Get all leads
-- `POST /api/leads` - Create a lead
-- `GET /api/leads/:id` - Get one lead
-- `PUT /api/leads/:id` - Update a lead
-- `DELETE /api/leads/:id` - Delete a lead
+- `GET /api/leads`
+- `POST /api/leads`
+- `GET /api/leads/:id`
+- `PUT /api/leads/:id`
+- `DELETE /api/leads/:id`
 
-### Notes
+Notes:
 
-- `GET /api/leads/:leadId/notes` - Get notes for a lead
-- `POST /api/leads/:leadId/notes` - Add a note to a lead
+- `GET /api/leads/:leadId/notes`
+- `POST /api/leads/:leadId/notes`
 
-### Dashboard
+Dashboard:
 
-- `GET /api/dashboard` - Get dashboard metrics
+- `GET /api/dashboard`
 
-## Database
+## Demo Video Checklist
 
-The backend uses Supabase tables:
+The assessment asks for a 5 to 10 minute demo video. The video should show:
 
-```sql
-public.leads (
-  id, name, company, email, phone, source, salesperson,
-  status, deal_value, created_date, updated_date
-)
+- How to run the backend and frontend locally
+- Login flow using the test credentials
+- Dashboard metrics
+- Creating a lead
+- Editing a lead
+- Updating lead status
+- Adding notes to a lead
+- Searching or filtering leads
+- Brief explanation of the backend API and Supabase database
 
-public.notes (
-  id, lead_id, content, created_by, created_date
-)
+Demo video link: add the YouTube, Loom, or Google Drive link here before submission.
 
-public.users (
-  id, name, email, created_date
-)
-```
+## Deployment Status
 
-Supabase Auth handles passwords/sessions. The `public.users` table stores each user's CRM profile details.
+Deployed application link: not deployed yet.
 
-## Notes
+If the app is deployed later, add the public URL here and confirm it works in an incognito/private browser window. Keep the test credentials in this README if login is required.
 
-- All authenticated users currently have full CRM access.
-- Search is still client-side.
-- Pagination and role-based access are good next production steps.
+## Known Limitations
+
+- All authenticated users can manage all leads and notes; there are no roles or per-user ownership rules yet.
+- The UI currently filters by status and lead source. Assigned salesperson filtering is supported by the backend API but is not exposed as a UI control yet.
+- Search is handled client-side after the filtered lead list is loaded.
+- Email confirmation must be disabled or users must be manually confirmed in Supabase for immediate local login after registration.
+- Automated tests are not included yet.
+- The app is currently configured for local development rather than production deployment.
+
+## Reflection
+
+I focused on building a complete, runnable CRM workflow instead of only a static interface. Supabase was useful because it provided both Postgres persistence and authentication while still requiring real backend API design, token handling, table design, row level security, and error handling.
+
+The most important product flow is the lead lifecycle: a sales user can log in, create a lead, update the lead as it moves through the pipeline, add notes after follow-ups, and see dashboard totals change as data changes. If I continued improving the project, I would add role-based access, salesperson ownership, server-side search, pagination, automated tests, and deployment-ready configuration.
+
+## Submission Notes
+
+Before submitting:
+
+- Make the GitHub repository public.
+- Add the demo video link above.
+- Add a deployed application link if one is available, or leave the deployment note as not deployed.
+- Test the repository, demo video, and deployment links in an incognito/private browser window.
+- Confirm the test login credentials work.
