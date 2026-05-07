@@ -55,34 +55,3 @@ Then open:
 ```text
 http://localhost:3000 or http://127.0.0.1:3000
 ```
-
-## Assessment Requirements Covered
-
-- Authentication with test credentials
-- Protected CRM screens after login
-- Lead CRUD
-- Lead status updates
-- Lead notes
-- Dashboard metrics
-- Filtering by status and lead source
-- Search by lead name, company, or email
-- Supabase database persistence
-- README with setup, environment variables, database setup, limitations, and reflection
-
-## Demo Video Checklist
-
-- Local setup and run commands
-- Login with `test1@gmail.com` / `123456`
-- Dashboard
-- Creating a lead
-- Editing a lead
-- Updating lead status
-- Adding notes
-- Searching or filtering leads
-- Backend API and Supabase database explanation
-- `index.html` - Loads React, Tailwind, and frontend scripts
-- `js/apiService.js` - Frontend API helper
-- `js/components.js` - Reusable UI components
-- `js/app.js` - Main app state and page logic
-- `supabase-schema.sql` - Supabase tables, indexes, trigger, and RLS policies
-- `README.md` - Full assessment-facing project documentation
